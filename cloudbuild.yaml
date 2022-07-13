@@ -1,10 +1,10 @@
 steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/civic-gate-353504/bima-image/wp:$COMMIT_SHA', '.']
+  args: ['build', '-t', 'gcr.io/civic-gate-353504/bima-image/$COMMIT_SHA', '.']
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/civic-gate-353504/bima-image/wp:$COMMIT_SHA']
+  args: ['push', 'gcr.io/civic-gate-353504/bima-image/$COMMIT_SHA']
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
@@ -14,7 +14,7 @@ steps:
     - 'deploy'
     - 'wp-test'
     - '--image'
-    - 'gcr.io/civic-gate-353504/bima-image/wp:$COMMIT_SHA'
+    - 'gcr.io/civic-gate-353504/bima-image/$COMMIT_SHA'
     - '--region'
     - 'asia-southeast2'
     - '--platform'
@@ -32,6 +32,7 @@ steps:
     - 'vpc-con'
 
 images:
-- 'gcr.io/civic-gate-353504/bima-image/wp'
+- 'gcr.io/civic-gate-353504/bima-image'
+
 options:
   logging: CLOUD_LOGGING_ONLY
